@@ -1,38 +1,38 @@
-import {DanmaTrack} from './DanmaTrack'
-import { IDanmaTrack } from './interface/IDanmaTrack';
-import { IDanmakuConfig } from './interface/IDanmakuConfig';
+import { DanmaTrack } from './DanmaTrack'
+import { IDanmaTrack } from './interface/IDanmaTrack'
+import { IDanmakuConfig } from './interface/IDanmakuConfig'
 // 弹幕库实例
 export default class Danmaku {
-  public mDanmukuConfig:IDanmakuConfig
+  public mDanmukuConfig: IDanmakuConfig
   private mCanvas: HTMLCanvasElement
-  private mCtx:CanvasRenderingContext2D
+  private mCtx: CanvasRenderingContext2D
   private isPause: boolean = false
-  private mDanmuTracks:Array<IDanmaTrack>=new Array<IDanmaTrack>();
-  constructor(canvas: HTMLCanvasElement,danmakuConfig:IDanmakuConfig) {
+  private mDanmuTracks: Array<IDanmaTrack> = new Array<IDanmaTrack>()
+  constructor(canvas: HTMLCanvasElement, danmakuConfig: IDanmakuConfig) {
     this.mCanvas = canvas
-    this.mDanmukuConfig=danmakuConfig
-    this.mCtx = (canvas.getContext('2d') as CanvasRenderingContext2D)
+    this.mDanmukuConfig = danmakuConfig
+    this.mCtx = canvas.getContext('2d') as CanvasRenderingContext2D
     this.initRender()
   }
-  addDanmuTrack(danmuTrack:IDanmaTrack){
+  addDanmuTrack(danmuTrack: IDanmaTrack) {
     this.mDanmuTracks.push(danmuTrack)
     danmuTrack.setDanmaku(this)
   }
-  removeDanmuTrack(danmuTrack: IDanmaTrack){
-    this.mDanmuTracks=this.mDanmuTracks.filter((item)=>item!==danmuTrack)
+  removeDanmuTrack(danmuTrack: IDanmaTrack) {
+    this.mDanmuTracks = this.mDanmuTracks.filter(item => item !== danmuTrack)
   }
   initRender() {
-    this.mCanvas.width=this.mDanmukuConfig.width
-    this.mCanvas.height=this.mDanmukuConfig.height
+    this.mCanvas.width = this.mDanmukuConfig.width
+    this.mCanvas.height = this.mDanmukuConfig.height
     if (window.requestAnimationFrame) {
-      requestAnimationFrame(this.render)
+      requestAnimationFrame(this.render.bind(this))
     } else {
-      throw new Error("你的浏览器不支持canvas")
+      throw new Error('你的浏览器不支持canvas')
     }
   }
   render() {
     if (this.isPause) return
-    for(let mDanmuTrack of this.mDanmuTracks){
+    for (let mDanmuTrack of this.mDanmuTracks) {
       mDanmuTrack.render(this.mCtx)
     }
   }
