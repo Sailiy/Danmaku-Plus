@@ -1,8 +1,9 @@
 import { IDanmaTrack, IDanmaTrackInfo} from './interface/IDanmaTrack'
 import Danmaku from "./Danmaku"
 import { IDanmaMessage } from './interface/IDanmaMessage';
+import { DanmakuPool } from './DanmakuPool';
 export class DanmaTrack implements IDanmaTrack {
-  mDanmaku?: Danmaku;
+  mDanmaku?: Danmaku
   mDanmuPool: DanmakuPool
   mDanmaMessages: IDanmaMessage[] = new Array<IDanmaMessage>()
   mTrackInfo: IDanmaTrackInfo = {
@@ -29,6 +30,7 @@ export class DanmaTrack implements IDanmaTrack {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
+    this.AddMessage(ctx)
     for (let i = 0; i < this.mDanmaMessages.length; i++) {
       this.mDanmaMessages[i].onMeasure(ctx, this.mTrackInfo)
       this.mDanmaMessages[i].onLayout(ctx, this.mTrackInfo)
@@ -38,4 +40,13 @@ export class DanmaTrack implements IDanmaTrack {
       }
     }
   }
+  AddMessage(ctx: CanvasRenderingContext2D) {
+    if(!this.mDanmaMessages.length||this.mTrackInfo.maxWidth<(ctx.canvas.width-10)){
+      let msg=this.mDanmuPool.getMessage()
+      if(msg){
+        this.mDanmaMessages.push(msg)
+      }
+    }
+  }
+  
 }

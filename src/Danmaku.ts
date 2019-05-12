@@ -3,9 +3,9 @@ import { IDanmaTrack } from './interface/IDanmaTrack';
 import { IDanmakuConfig } from './interface/IDanmakuConfig';
 // 弹幕库实例
 export default class Danmaku {
+  public mDanmukuConfig:IDanmakuConfig
   private mCanvas: HTMLCanvasElement
   private mCtx:CanvasRenderingContext2D
-  private mDanmukuConfig:IDanmakuConfig
   private isPause: boolean = false
   private mDanmuTracks:Array<IDanmaTrack>=new Array<IDanmaTrack>();
   constructor(canvas: HTMLCanvasElement,danmakuConfig:IDanmakuConfig) {
@@ -16,6 +16,7 @@ export default class Danmaku {
   }
   addDanmuTrack(danmuTrack:IDanmaTrack){
     this.mDanmuTracks.push(danmuTrack)
+    danmuTrack.setDanmaku(this)
   }
   removeDanmuTrack(danmuTrack: IDanmaTrack){
     this.mDanmuTracks=this.mDanmuTracks.filter((item)=>item!==danmuTrack)
