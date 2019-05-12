@@ -1,7 +1,9 @@
 import { IDanmaMessage, Point, Rect } from "../interface/IDanmaMessage";
 import { IDanmaTrackInfo } from "../interface/IDanmaTrack";
 
-class TextMessage implements IDanmaMessage {
+export class TextMessage implements IDanmaMessage {
+  isInit: boolean=false
+  mMsg:string
   position: Point = {
     top: 0,
     left: 0
@@ -10,9 +12,18 @@ class TextMessage implements IDanmaMessage {
     width: 0,
     height: 0
   }
-  mMsg:string
+
   constructor(msg:string){
     this.mMsg=msg
+  }
+  onInit(): void {
+    throw new Error("Method not implemented.");
+  }
+  onCreate(): void {
+    throw new Error("Method not implemented.");
+  }
+  onDistory(): void {
+    throw new Error("Method not implemented.");
   }
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
     throw new Error("Method not implemented.");

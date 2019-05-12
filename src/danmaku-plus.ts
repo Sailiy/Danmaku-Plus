@@ -1,9 +1,14 @@
-import Danmaku from "./Danmaku";
+import Danmaku from './Danmaku'
+import { DanmakuPool } from './DanmakuPool'
+import { DanmaTrack } from './DanmaTrack'
+import {TextMessage} from './MessageImpl/TextMessage'
 
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
-  // import "core-js/fn/array.find"
+// import "core-js/fn/array.find"
 
-// const mDanmuku:Danmaku =new Danmaku()
-// console.log(mDanmuku)
-// console.log(1234)
-export default Danmaku
+export default {
+  Danmaku,
+  DanmakuPool,
+  TextMessage,
+  DanmaTrack
+}
