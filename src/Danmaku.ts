@@ -1,38 +1,44 @@
-import DefaultDanmakuConfig from "./ConfigImpl/DefaultDanmakuConfig";
-
+import {DanmaTrack} from './DanmaTrack'
+import { IDanmaTrack } from './interface/IDanmaTrack';
+import { IDanmakuConfig } from './interface/IDanmakuConfig';
 // 弹幕库实例
 export default class Danmaku {
-  private mConfig:DanmakuConfig=DefaultDanmakuConfig
-  private mPool!: DanmakuPool
-  private mCanvas!: HTMLCanvasElement
-  private isPause:boolean=false
-  constructor(config?:DanmakuConfig){
-   this.initConfig(config)
+  private mCanvas: HTMLCanvasElement
+  private mCtx:CanvasRenderingContext2D
+  private mDanmukuConfig:IDanmakuConfig
+  private isPause: boolean = false
+  private mDanmuTracks:Array<IDanmaTrack>=new Array<IDanmaTrack>();
+  constructor(canvas: HTMLCanvasElement,danmakuConfig:IDanmakuConfig) {
+    this.mCanvas = canvas
+    this.mDanmukuConfig=danmakuConfig
+    this.mCtx = (canvas.getContext('2d') as CanvasRenderingContext2D)
+    this.initRender()
   }
-  private initConfig(config?: DanmakuConfig){
-    if (config) {
-      this.mConfig = config
-    }
-    this.mPool=new DanmakuPool(this.mConfig.POOL_SIZE)
+  addDanmuTrack(danmuTrack:IDanmaTrack){
+    this.mDanmuTracks.push(danmuTrack)
   }
-  getDanmakuPool():DanmakuPool{
-    return this.mPool
+  removeDanmuTrack(danmuTrack: IDanmaTrack){
+    this.mDanmuTracks=this.mDanmuTracks.filter((item)=>item!==danmuTrack)
   }
-  private initRender(canvas:HTMLCanvasElement){
-    this.mCanvas=canvas
-    if(window.requestAnimationFrame){
+  initRender() {
+    this.mCanvas.width=this.mDanmukuConfig.width
+    this.mCanvas.height=this.mDanmukuConfig.height
+    if (window.requestAnimationFrame) {
       requestAnimationFrame(this.render)
-    }else{
+    } else {
       throw new Error("你的浏览器不支持canvas")
     }
   }
-  render(){
-    if(this.isPause)return
+  render() {
+    if (this.isPause) return
+    for(let mDanmuTrack of this.mDanmuTracks){
+      mDanmuTrack.render(this.mCtx)
+    }
   }
-  start(){
-    this.isPause=true
+  start() {
+    this.isPause = true
   }
-  pause(){
-    this.isPause=false
+  pause() {
+    this.isPause = false
   }
 }

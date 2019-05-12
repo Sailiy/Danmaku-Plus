@@ -1,18 +1,16 @@
-interface Rect{
+import {IDanmaTrackInfo} from './IDanmaTrack'
+export interface Rect{
   width:number
   height:number
 }
-interface Point{
+export interface Point{
   top:number
   left:number
 }
-interface TrackInfo{
-  trackID:number
-  maxLeft:number
-}
-interface IDanmaMessage{
-  mTrackInfo?:TrackInfo
-  onMeasure(canvas: CanvasRenderingContext2D):Rect
-  onDraw(canvas:CanvasRenderingContext2D):void
-  onLayout(canvas: CanvasRenderingContext2D): Point
+export interface IDanmaMessage{
+  position:Point
+  size:Rect
+  onMeasure(ctx: CanvasRenderingContext2D,trackInfo:IDanmaTrackInfo):Rect
+  onDraw(ctx:CanvasRenderingContext2D,trackInfo:IDanmaTrackInfo):void
+  onLayout(ctx: CanvasRenderingContext2D,trackInfo:IDanmaTrackInfo): Point
 }
