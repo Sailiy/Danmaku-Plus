@@ -6,3 +6,4 @@ import Danmaku from "./Danmaku";
 
 const mDanmuku:Danmaku =new Danmaku()
 console.log(mDanmuku)
+console.log(1234)
