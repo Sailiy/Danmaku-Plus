@@ -18,8 +18,8 @@ export class TextMessage extends BaseMessage{
     super()
     this.textMessageConfig = Object.assign({},this.textMessageConfig,msg)
   }
-  onCreate(): void {
-    this.created=true
+  onCreate(): boolean {
+    return true
   }  
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
     ctx.textAlign="left"
@@ -28,7 +28,7 @@ export class TextMessage extends BaseMessage{
     let res=ctx.measureText(this.textMessageConfig.mMsg)
     console.log(res)
     return {
-      width:0,
+      width: res.width,
       height:0
     }
   }
@@ -41,9 +41,7 @@ export class TextMessage extends BaseMessage{
   onDraw(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): void {
     console.log()
   }
-  onDestroyed(): void {
-    if(this.position.left<0){
-      this.distoryed=true
-    }
+  onDestroyed(): boolean {
+    return this.position.left<0
   }
 }

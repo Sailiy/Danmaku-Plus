@@ -34,12 +34,12 @@ export class DanmaTrack implements IDanmaTrack {
     for (let i = 0; i < this.mDanmaMessages.length; i++) {
       let currentDanmaMessage=this.mDanmaMessages[i]
       if(!currentDanmaMessage.created){
-        currentDanmaMessage.onCreate()
+        currentDanmaMessage.onBaseCreate()
       }else{
-        currentDanmaMessage.onMeasure(ctx, this.mTrackInfo)
-        currentDanmaMessage.onLayout(ctx, this.mTrackInfo)
-        currentDanmaMessage.onDraw(ctx, this.mTrackInfo)
-        currentDanmaMessage.onDestroyed()
+        currentDanmaMessage.onBaseMeasure(ctx, this.mTrackInfo)
+        currentDanmaMessage.onBaseLayout(ctx, this.mTrackInfo)
+        currentDanmaMessage.onBaseDraw(ctx, this.mTrackInfo)
+        currentDanmaMessage.onBaseDestroyed()
       }
       if (i === this.mDanmaMessages.length - 1) {
         this.mTrackInfo.maxWidth = currentDanmaMessage.position.left + currentDanmaMessage.size.width

@@ -35,11 +35,12 @@ export default class Danmaku {
     for (let mDanmuTrack of this.mDanmuTracks) {
       mDanmuTrack.render(this.mCtx)
     }
+    requestAnimationFrame(this.render.bind(this))
   }
   start() {
-    this.isPause = true
+    this.isPause = false
   }
   pause() {
-    this.isPause = false
+    this.isPause = true
   }
 }

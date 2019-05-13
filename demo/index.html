@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>demo</title>
-    <style>
-      canvas {
-        width: 758px;
-        height: 384px;
-        background-color: rgba(0, 0, 0, 0.2);
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="cav">你的浏览器不支持canvas</canvas>
-    <script src="/static/danmaku-plus.umd.js"></script>
-    <script>
-      var canvas = document.getElementById('cav')
-      var danmuku = new danmakuPlus.Danmaku(canvas, { width: 1280, height: 720 })
-      console.log(danmuku)
-    </script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>demo</title>
+  <style>
+    canvas {
+      width: 758px;
+      height: 384px;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+  </style>
+</head>
+
+<body>
+  <canvas id="cav">你的浏览器不支持canvas</canvas>
+  <script src="/static/danmaku-plus.umd.js"></script>
+  <script>
+    const {
+      DanmakuPool,
+      DanmaTrack,
+      Danmaku,
+      TextMessage
+    } = danmakuPlus
+    var canvas = document.getElementById('cav')
+    var danmuku = new Danmaku(canvas, {
+      width: 1280,
+      height: 720
+    })
+    var danmuPool = new DanmakuPool()
+    var danmuTrack=new DanmaTrack(danmuPool,{
+      top:10,
+      height:30
+    })
+    danmuku.addDanmuTrack(danmuTrack)
+    danmuPool.addMessage(new TextMessage({
+      mMsg:"12341234"
+    }))
+    danmuku.start()
+  </script>
+</body>
+
 </html>
