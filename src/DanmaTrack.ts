@@ -47,7 +47,7 @@ export class DanmaTrack implements IDanmaTrack {
     this.AddMessage(ctx)
   }
   AddMessage(ctx: CanvasRenderingContext2D) {
-    if(!this.mDanmaMessages.length||this.mTrackInfo.maxWidth<(ctx.canvas.width-10)){
+    if(this.mTrackInfo.maxWidth<(ctx.canvas.width-10)){
       let msg=this.mDanmuPool.getMessage()
       if(msg){
         this.mDanmaMessages.push(msg)

@@ -4,8 +4,7 @@ import { IDanmaTrackInfo } from "../interface/IDanmaTrack";
 export abstract class BaseMessage implements IDanmaMessage {
   created: boolean=false;
   distoryed: boolean=false;
-  isInit: boolean=false
-
+  isLayout: boolean=false
   position: Point = {
     top: 0,
     left: 0

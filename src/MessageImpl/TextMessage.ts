@@ -23,23 +23,30 @@ export class TextMessage extends BaseMessage{
   }  
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
     ctx.textAlign="left"
-    ctx.textBaseline="top"
+    ctx.textBaseline="middle"
     ctx.font=`${this.textMessageConfig.fontSize}px ${this.textMessageConfig.fontFamily}`
     let res=ctx.measureText(this.textMessageConfig.mMsg)
     console.log(res)
     return {
       width: res.width,
-      height:0
+      height:trackInfo.height
     }
   }
   onLayout(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Point {
-    return {
-      top:0,
-      left:0
+    if(!this.isLayout){
+      this.isLayout=true
+      return {
+        top: (trackInfo.top + trackInfo.height / 2),
+        left: ctx.canvas.width
+      }
     }
+    console.log(this.position)
+    this.position.left-=3
+    return this.position
   }
   onDraw(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): void {
-    console.log()
+    ctx.fillStyle=this.textMessageConfig.color
+    ctx.fillText(this.textMessageConfig.mMsg,this.position.left,this.position.top)
   }
   onDestroyed(): boolean {
     return this.position.left<0
