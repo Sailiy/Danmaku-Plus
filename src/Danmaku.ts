@@ -7,7 +7,7 @@ export default class Danmaku {
   private mCanvas: HTMLCanvasElement
   private mCtx: CanvasRenderingContext2D
   private isPause: boolean = false
-  private lastRenderTime:number=0
+  private lastRenderTime: number = 0
   private mDanmuTracks: Array<IDanmaTrack> = new Array<IDanmaTrack>()
   constructor(canvas: HTMLCanvasElement, danmakuConfig: IDanmakuConfig) {
     this.mCanvas = canvas
@@ -31,22 +31,21 @@ export default class Danmaku {
       this.renderBySetInterval()
     }
   }
-  renderByAnimationFrame(){
+  renderByAnimationFrame() {
     this.render()
     requestAnimationFrame(this.renderByAnimationFrame.bind(this))
   }
-  renderBySetInterval(){
-    setInterval(this.render.bind(this),0 )
+  renderBySetInterval() {
+    setInterval(this.render.bind(this), 0)
   }
   render() {
     if (this.isPause) return
-    let currentTime=new Date().getTime()
-    if ((currentTime - this.lastRenderTime)<16){
-      return
-    }
-    console.log(currentTime)
-    this.lastRenderTime=currentTime
-    this.mCtx.clearRect(0,0,this.mCanvas.width,this.mCanvas.height)
+    // let currentTime = new Date().getTime()
+    // if (currentTime - this.lastRenderTime < 16) {
+    //   return
+    // }
+    // this.lastRenderTime = currentTime
+    this.mCtx.clearRect(0, 0, this.mCanvas.width, this.mCanvas.height)
     for (let mDanmuTrack of this.mDanmuTracks) {
       mDanmuTrack.render(this.mCtx)
     }

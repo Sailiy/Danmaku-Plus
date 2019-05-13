@@ -1,46 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>demo</title>
+    <style>
+      canvas {
+        width: 1280px;
+        height: 720px;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>demo</title>
-  <style>
-    canvas {
-      width: 758px;
-      height: 384px;
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  </style>
-</head>
+  <body>
+    <canvas id="cav">你的浏览器不支持canvas</canvas>
+    <button id="btn_send">发送</button>
+    <button id="btn_send_mut">批量发送</button>
+    <script src="/static/danmaku-plus.umd.js"></script>
+    <script>
+      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage } = danmakuPlus
+      var canvas = document.getElementById('cav')
+      var danmuku = new Danmaku(canvas, {
+        width: 1280,
+        height: 720
+      })
+      var danmuPool = new DanmakuPool(300)
+      var danmuTrack = new DanmaTrack(danmuPool, {
+        top: 10,
+        height: 30
+      })
 
-<body>
-  <canvas id="cav">你的浏览器不支持canvas</canvas>
-  <script src="/static/danmaku-plus.umd.js"></script>
-  <script>
-    const {
-      DanmakuPool,
-      DanmaTrack,
-      Danmaku,
-      TextMessage
-    } = danmakuPlus
-    var canvas = document.getElementById('cav')
-    var danmuku = new Danmaku(canvas, {
-      width: 1280,
-      height: 720
-    })
-    var danmuPool = new DanmakuPool()
-    var danmuTrack=new DanmaTrack(danmuPool,{
-      top:10,
-      height:30
-    })
-    danmuku.addDanmuTrack(danmuTrack)
-    danmuPool.addMessage(new TextMessage({
-      mMsg:"12341234"
-    }))
-    danmuku.start()
-  </script>
-</body>
+      for (var i = 0; i < 8; i++) {
+        var danmuTrack = new DanmaTrack(danmuPool, {
+          top: (10 + 30) * i + 10,
+          height: 30
+        })
+        danmuku.addDanmuTrack(danmuTrack)
+      }
 
+      danmuPool.addMessage(
+        new TextMessage({
+          mMsg: '12341234'
+        })
+      )
+      danmuku.start()
+      function sendDanmu() {
+        danmuPool.addMessage(
+          new TextMessage({
+            mMsg: parseInt(Math.random() * 10000000) + ''
+          })
+        )
+      }
+      function sendDanmuMtu() {
+        var message = []
+        for (var i = 0; i < 100; i++) {
+          message.push(new TextMessage({ mMsg: parseInt(Math.random() * 10000000) + '' }))
+        }
+        danmuPool.addMessages(message)
+      }
+      document.getElementById('btn_send').addEventListener('click', sendDanmu)
+      document.getElementById('btn_send_mut').addEventListener('click', sendDanmuMtu)
+    </script>
+  </body>
 </html>

@@ -1,7 +1,7 @@
-import { IDanmaTrack, IDanmaTrackInfo} from './interface/IDanmaTrack'
-import Danmaku from "./Danmaku"
-import { IDanmaMessage } from './interface/IDanmaMessage';
-import { DanmakuPool } from './DanmakuPool';
+import { IDanmaTrack, IDanmaTrackInfo } from './interface/IDanmaTrack'
+import Danmaku from './Danmaku'
+import { IDanmaMessage } from './interface/IDanmaMessage'
+import { DanmakuPool } from './DanmakuPool'
 export class DanmaTrack implements IDanmaTrack {
   mDanmaku?: Danmaku
   mDanmuPool: DanmakuPool
@@ -11,50 +11,52 @@ export class DanmaTrack implements IDanmaTrack {
     top: 0,
     height: 0
   }
-  mDanmuTrackConfig:IDanmaTrackConfig={
-    top:0,
-    height:0
+  mDanmuTrackConfig: IDanmaTrackConfig = {
+    top: 0,
+    height: 0
   }
   constructor(danmuPool: DanmakuPool, danmaTrackConfig: IDanmaTrackConfig) {
     this.mDanmuPool = danmuPool
     this.initConfig(danmaTrackConfig)
   }
   setDanmaku(danmaku: Danmaku): void {
-    this.mDanmaku=danmaku
+    this.mDanmaku = danmaku
   }
 
-  initConfig(danmaTrackConfig: IDanmaTrackConfig){
+  initConfig(danmaTrackConfig: IDanmaTrackConfig) {
     this.mDanmuTrackConfig = danmaTrackConfig
-    this.mTrackInfo.top=danmaTrackConfig.top
-    this.mTrackInfo.height=danmaTrackConfig.height
+    this.mTrackInfo.top = danmaTrackConfig.top
+    this.mTrackInfo.height = danmaTrackConfig.height
   }
 
   render(ctx: CanvasRenderingContext2D): void {
     this.refreshMessage(ctx)
     for (let i = 0; i < this.mDanmaMessages.length; i++) {
-      let currentDanmaMessage=this.mDanmaMessages[i]
+      let currentDanmaMessage = this.mDanmaMessages[i]
       currentDanmaMessage.onBaseMeasure(ctx, this.mTrackInfo)
       currentDanmaMessage.onBaseLayout(ctx, this.mTrackInfo)
       currentDanmaMessage.onBaseDraw(ctx, this.mTrackInfo)
       currentDanmaMessage.onBaseDestroyed()
       if (i === this.mDanmaMessages.length - 1) {
-        this.mTrackInfo.maxWidth = currentDanmaMessage.position.left + currentDanmaMessage.size.width
+        this.mTrackInfo.maxWidth =
+          currentDanmaMessage.position.left + currentDanmaMessage.size.width
       }
     }
   }
-  refreshMessage(ctx: CanvasRenderingContext2D){
+  refreshMessage(ctx: CanvasRenderingContext2D) {
     this.removeMessage()
     this.AddMessage(ctx)
   }
   AddMessage(ctx: CanvasRenderingContext2D) {
-    if(this.mTrackInfo.maxWidth<(ctx.canvas.width-10)){
-      let msg=this.mDanmuPool.getMessage()
-      if(msg){
+    if (this.mTrackInfo.maxWidth < ctx.canvas.width - 10) {
+      let msg = this.mDanmuPool.getMessage()
+      if (msg) {
+        console.log(msg)
         this.mDanmaMessages.push(msg)
       }
     }
   }
-  removeMessage(){
-    this.mDanmaMessages=this.mDanmaMessages.filter((item)=>!item.distoryed)
+  removeMessage() {
+    this.mDanmaMessages = this.mDanmaMessages.filter(item => !item.distoryed)
   }
 }
