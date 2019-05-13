@@ -25,17 +25,23 @@ export default class Danmaku {
     this.mCanvas.width = this.mDanmukuConfig.width
     this.mCanvas.height = this.mDanmukuConfig.height
     if (window.requestAnimationFrame) {
-      requestAnimationFrame(this.render.bind(this))
+      this.renderByAnimationFrame()
     } else {
-      throw new Error('你的浏览器不支持canvas')
+      this.renderBySetInterval()
     }
+  }
+  renderByAnimationFrame(){
+    this.render()
+    requestAnimationFrame(this.renderByAnimationFrame.bind(this))
+  }
+  renderBySetInterval(){
+    setInterval(this.render.bind(this),20)
   }
   render() {
     if (this.isPause) return
     for (let mDanmuTrack of this.mDanmuTracks) {
       mDanmuTrack.render(this.mCtx)
     }
-    requestAnimationFrame(this.render.bind(this))
   }
   start() {
     this.isPause = false
