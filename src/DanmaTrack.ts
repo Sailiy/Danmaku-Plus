@@ -32,11 +32,18 @@ export class DanmaTrack implements IDanmaTrack {
   render(ctx: CanvasRenderingContext2D): void {
     this.AddMessage(ctx)
     for (let i = 0; i < this.mDanmaMessages.length; i++) {
-      this.mDanmaMessages[i].onMeasure(ctx, this.mTrackInfo)
-      this.mDanmaMessages[i].onLayout(ctx, this.mTrackInfo)
-      this.mDanmaMessages[i].onDraw(ctx, this.mTrackInfo)
+
+      let currentDanmaMessage=this.mDanmaMessages[i]
+      if(currentDanmaMessage.created){
+        currentDanmaMessage.onMeasure(ctx, this.mTrackInfo)
+        currentDanmaMessage.onLayout(ctx, this.mTrackInfo)
+        currentDanmaMessage.onDraw(ctx, this.mTrackInfo)
+      }else{
+        currentDanmaMessage.create()
+      }
+      
       if (i === this.mDanmaMessages.length - 1) {
-        this.mTrackInfo.maxWidth = this.mDanmaMessages[i].position.left + this.mDanmaMessages[i].size.width
+        this.mTrackInfo.maxWidth = currentDanmaMessage.position.left + currentDanmaMessage.size.width
       }
     }
   }

@@ -11,10 +11,11 @@ export interface IDanmaMessage{
   position:Point
   size:Rect
   isInit:boolean
-  onInit():void
+  created:boolean
+  distoryed:boolean
   onCreate():void
-  onDistory():void
   onMeasure(ctx: CanvasRenderingContext2D,trackInfo:IDanmaTrackInfo):Rect
-  onDraw(ctx:CanvasRenderingContext2D,trackInfo:IDanmaTrackInfo):void
   onLayout(ctx: CanvasRenderingContext2D,trackInfo:IDanmaTrackInfo): Point
+  onDraw(ctx:CanvasRenderingContext2D,trackInfo:IDanmaTrackInfo):void
+  onDestroyed():void
 }
