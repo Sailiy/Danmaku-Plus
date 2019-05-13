@@ -1,7 +1,7 @@
 import { IDanmaMessage } from "./interface/IDanmaMessage";
 
 export class DanmakuPool{
-  private mPoolSize:number=100
+  private mPoolSize:number=20
   private mMessagePool: Array<IDanmaMessage|null> = new Array(this.mPoolSize)
   constructor(size?:number){
     if(size){
@@ -17,6 +17,8 @@ export class DanmakuPool{
    for(let i=0;i<this.mMessagePool.length;i++){
      if(this.mMessagePool[i]!==null&&(this.mMessagePool[i] as IDanmaMessage).isInit){
        result=this.mMessagePool[i]
+       this.mMessagePool[i]=null
+       break;
      }
    }
    return result
@@ -26,7 +28,7 @@ export class DanmakuPool{
       for (let j = 0; j < this.mMessagePool.length; j++) {
         if (!this.mMessagePool[j]) {
           this.mMessagePool[j] = msgs[i]
-          if (this.mMessagePool[j]) (this.mMessagePool[j] as IDanmaMessage).onInit()
+          if (this.mMessagePool[j]) (this.mMessagePool[j] as IDanmaMessage).onCreate()
         }
       }
     }

@@ -39,7 +39,7 @@ export class DanmaTrack implements IDanmaTrack {
         currentDanmaMessage.onLayout(ctx, this.mTrackInfo)
         currentDanmaMessage.onDraw(ctx, this.mTrackInfo)
       }else{
-        currentDanmaMessage.create()
+        currentDanmaMessage.onCreate()
       }
       
       if (i === this.mDanmaMessages.length - 1) {
