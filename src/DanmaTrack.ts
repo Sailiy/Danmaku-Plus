@@ -30,22 +30,25 @@ export class DanmaTrack implements IDanmaTrack {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    this.AddMessage(ctx)
+    this.refreshMessage(ctx)
     for (let i = 0; i < this.mDanmaMessages.length; i++) {
-
       let currentDanmaMessage=this.mDanmaMessages[i]
-      if(currentDanmaMessage.created){
+      if(!currentDanmaMessage.created){
+        currentDanmaMessage.onCreate()
+      }else{
         currentDanmaMessage.onMeasure(ctx, this.mTrackInfo)
         currentDanmaMessage.onLayout(ctx, this.mTrackInfo)
         currentDanmaMessage.onDraw(ctx, this.mTrackInfo)
-      }else{
-        currentDanmaMessage.onCreate()
+        currentDanmaMessage.onDestroyed()
       }
-      
       if (i === this.mDanmaMessages.length - 1) {
         this.mTrackInfo.maxWidth = currentDanmaMessage.position.left + currentDanmaMessage.size.width
       }
     }
+  }
+  refreshMessage(ctx: CanvasRenderingContext2D){
+    this.removeMessage()
+    this.AddMessage(ctx)
   }
   AddMessage(ctx: CanvasRenderingContext2D) {
     if(!this.mDanmaMessages.length||this.mTrackInfo.maxWidth<(ctx.canvas.width-10)){
@@ -55,5 +58,7 @@ export class DanmaTrack implements IDanmaTrack {
       }
     }
   }
-  
+  removeMessage(){
+    this.mDanmaMessages=this.mDanmaMessages.filter((item)=>!item.distoryed)
+  }
 }
