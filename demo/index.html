@@ -16,6 +16,9 @@
 
   <body>
     <canvas id="cav">你的浏览器不支持canvas</canvas>
+    <br />
+    <button id="btn_pause">暂停</button>
+    <button id="btn_start">播放</button>
     <button id="btn_send">发送</button>
     <button id="btn_send_mut">批量发送</button>
     <script src="/static/danmaku-plus.umd.js"></script>
@@ -60,8 +63,16 @@
         }
         danmuPool.addMessages(message)
       }
+      function handlePause() {
+        danmuku.pause()
+      }
+      function handleStart() {
+        danmuku.start()
+      }
       document.getElementById('btn_send').addEventListener('click', sendDanmu)
       document.getElementById('btn_send_mut').addEventListener('click', sendDanmuMtu)
+      document.getElementById('btn_pause').addEventListener('click', handlePause)
+      document.getElementById('btn_start').addEventListener('click', handleStart)
     </script>
   </body>
 </html>

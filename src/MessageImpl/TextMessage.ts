@@ -4,6 +4,7 @@ import { BaseMessage } from './BaseMessage'
 interface TextMessageConfig {
   mMsg: string
   color: string
+  strokeColor: string
   fontSize: number
   fontFamily: string
 }
@@ -11,6 +12,7 @@ export class TextMessage extends BaseMessage {
   textMessageConfig: TextMessageConfig = {
     mMsg: '',
     color: '#FFF',
+    strokeColor: '#000',
     fontSize: 30,
     fontFamily: '黑体'
   }
@@ -43,6 +45,8 @@ export class TextMessage extends BaseMessage {
     return this.position
   }
   onDraw(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): void {
+    ctx.fillStyle = this.textMessageConfig.strokeColor
+    ctx.strokeText(this.textMessageConfig.mMsg, this.position.left, this.position.top)
     ctx.fillStyle = this.textMessageConfig.color
     ctx.fillText(this.textMessageConfig.mMsg, this.position.left, this.position.top)
   }

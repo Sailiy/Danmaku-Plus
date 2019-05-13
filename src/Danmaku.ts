@@ -40,16 +40,15 @@ export default class Danmaku {
   }
   render() {
     if (this.isPause) return
-    // let currentTime = new Date().getTime()
-    // if (currentTime - this.lastRenderTime < 16) {
-    //   return
-    // }
-    // this.lastRenderTime = currentTime
+    //let currentTime = new Date().getTime()
+    //if (currentTime - this.lastRenderTime < 8) {
+    //  return
+    //}
+    //this.lastRenderTime = currentTime
     this.mCtx.clearRect(0, 0, this.mCanvas.width, this.mCanvas.height)
     for (let mDanmuTrack of this.mDanmuTracks) {
       mDanmuTrack.render(this.mCtx)
     }
-    // this.mCtx.restore()
   }
   start() {
     this.isPause = false
