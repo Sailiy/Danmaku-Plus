@@ -1,26 +1,49 @@
 import { IDanmaMessage, Point, Rect } from "../interface/IDanmaMessage";
 import { IDanmaTrackInfo } from "../interface/IDanmaTrack";
 import { BaseMessage } from "./BaseMessage";
-
+interface TextMessageConfig{
+  mMsg:string
+  color:string
+  fontSize:number
+  fontFamily:string
+}
 export class TextMessage extends BaseMessage{
-  mMsg: string
-  constructor(msg: string) {
+  textMessageConfig:TextMessageConfig={
+    mMsg:'',
+    color:'#FFF',
+    fontSize:30,
+    fontFamily:"黑体"
+  }
+  constructor(msg: TextMessageConfig) {
     super()
-    this.mMsg = msg
+    this.textMessageConfig = Object.assign({},this.textMessageConfig,msg)
   }
   onCreate(): void {
     this.created=true
   }  
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
-    throw new Error("Method not implemented.");
+    ctx.textAlign="left"
+    ctx.textBaseline="top"
+    ctx.font=`${this.textMessageConfig.fontSize}px ${this.textMessageConfig.fontFamily}`
+    let res=ctx.measureText(this.textMessageConfig.mMsg)
+    console.log(res)
+    return {
+      width:0,
+      height:0
+    }
   }
   onLayout(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Point {
-    throw new Error("Method not implemented.");
+    return {
+      top:0,
+      left:0
+    }
   }
   onDraw(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): void {
-    throw new Error("Method not implemented.");
+    console.log()
   }
   onDestroyed(): void {
-    throw new Error("Method not implemented.");
+    if(this.position.left<0){
+      this.distoryed=true
+    }
   }
 }
