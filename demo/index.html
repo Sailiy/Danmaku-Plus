@@ -30,10 +30,6 @@
         height: 720
       })
       var danmuPool = new DanmakuPool(300)
-      var danmuTrack = new DanmaTrack(danmuPool, {
-        top: 10,
-        height: 30
-      })
 
       for (var i = 0; i < 8; i++) {
         var danmuTrack = new DanmaTrack(danmuPool, {
@@ -49,6 +45,7 @@
         })
       )
       danmuku.start()
+
       function sendDanmu() {
         danmuPool.addMessage(
           new TextMessage({
@@ -56,6 +53,7 @@
           })
         )
       }
+
       function sendDanmuMtu() {
         var message = []
         for (var i = 0; i < 100; i++) {
@@ -73,6 +71,7 @@
       document.getElementById('btn_send_mut').addEventListener('click', sendDanmuMtu)
       document.getElementById('btn_pause').addEventListener('click', handlePause)
       document.getElementById('btn_start').addEventListener('click', handleStart)
+      
     </script>
   </body>
 </html>

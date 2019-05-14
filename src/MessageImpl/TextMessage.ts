@@ -41,7 +41,7 @@ export class TextMessage extends BaseMessage {
         left: ctx.canvas.width
       }
     }
-    this.position.left -= 3
+    this.position.left -= 4
     return this.position
   }
   onDraw(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): void {
