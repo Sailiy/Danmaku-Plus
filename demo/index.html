@@ -21,9 +21,10 @@
     <button id="btn_start">播放</button>
     <button id="btn_send">发送</button>
     <button id="btn_send_mut">批量发送</button>
+    <button id="btn_send_img">批量发送</button>
     <script src="/static/danmaku-plus.umd.js"></script>
     <script>
-      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage } = danmakuPlus
+      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage, ImgMessage } = danmakuPlus
       var canvas = document.getElementById('cav')
       var danmuku = new Danmaku(canvas, {
         width: 1280,
@@ -31,21 +32,31 @@
       })
       var danmuPool = new DanmakuPool(300)
 
-      for (var i = 0; i < 8; i++) {
+      for (var i = 0; i < 6; i++) {
         var danmuTrack = new DanmaTrack(danmuPool, {
           top: (10 + 30) * i + 10,
           height: 30
         })
         danmuku.addDanmuTrack(danmuTrack)
       }
-
+      var imgDanmuPool = new DanmakuPool(10)
+      var imgDanmuTrack = new DanmaTrack(imgDanmuPool, {
+        top: 20,
+        height: 40
+      })
+      danmuku.addDanmuTrack(imgDanmuTrack)
       danmuPool.addMessage(
         new TextMessage({
           mMsg: '12341234'
         })
       )
       danmuku.start()
-
+      function handlePause() {
+        danmuku.pause()
+      }
+      function handleStart() {
+        danmuku.start()
+      }
       function sendDanmu() {
         danmuPool.addMessage(
           new TextMessage({
@@ -61,17 +72,21 @@
         }
         danmuPool.addMessages(message)
       }
-      function handlePause() {
-        danmuku.pause()
-      }
-      function handleStart() {
-        danmuku.start()
+      function sendDanmuImg() {
+        var imgDanmu = new ImgMessage({
+          url: 'http://img.gifhome.com/gif/s/20181004/081793df4f47143ff86d950bee221ac0.gif'
+        })
+        var imgDanmu2 = new ImgMessage({
+          url: 'http://img.gifhome.com/gif/s/20181004/081793df4f47143ff86d950bee221ac0.gif'
+        })
+        imgDanmuPool.addMessage(imgDanmu)
+        imgDanmuPool.addMessage(imgDanmu2)
       }
       document.getElementById('btn_send').addEventListener('click', sendDanmu)
       document.getElementById('btn_send_mut').addEventListener('click', sendDanmuMtu)
       document.getElementById('btn_pause').addEventListener('click', handlePause)
       document.getElementById('btn_start').addEventListener('click', handleStart)
-      
+      document.getElementById('btn_send_img').addEventListener('click', sendDanmuImg)
     </script>
   </body>
 </html>

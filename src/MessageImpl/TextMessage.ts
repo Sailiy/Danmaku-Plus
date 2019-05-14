@@ -8,8 +8,8 @@ interface TextMessageConfig {
   fontSize: number
   fontFamily: string
 }
-export class TextMessage extends BaseMessage {
-  textMessageConfig: TextMessageConfig = {
+export default class TextMessage extends BaseMessage {
+  private textMessageConfig: TextMessageConfig = {
     mMsg: '',
     color: '#FFF',
     strokeColor: '#000',
@@ -20,8 +20,8 @@ export class TextMessage extends BaseMessage {
     super()
     this.textMessageConfig = Object.assign({}, this.textMessageConfig, msg)
   }
-  onCreate(): boolean {
-    return true
+  onCreate(callback: Function) {
+    callback(true)
   }
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
     ctx.textAlign = 'left'
@@ -41,7 +41,7 @@ export class TextMessage extends BaseMessage {
         left: ctx.canvas.width
       }
     }
-    this.position.left -= 4
+    this.position.left -= 3
     return this.position
   }
   onDraw(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): void {
