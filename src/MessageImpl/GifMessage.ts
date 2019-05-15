@@ -1,6 +1,7 @@
 import { IDanmaMessage, Point, Rect } from '../interface/IDanmaMessage'
 import { IDanmaTrackInfo } from '../interface/IDanmaTrack'
 import { BaseMessage } from './BaseMessage'
+import omggif from 'omggif'
 interface ImgMessageConfig {
   url: string
   width: number
