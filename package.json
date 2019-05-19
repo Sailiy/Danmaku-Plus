@@ -1,6 +1,6 @@
 {
   "name": "danmaku-plus",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "keywords": [],
   "main": "dist/danmaku-plus.umd.js",
@@ -12,7 +12,7 @@
   "author": "zhaoyu <yu.zhao@wm-motor.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Sailiy/Danmaku-Plus.git"
   },
   "license": "MIT",
   "engines": {
