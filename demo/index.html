@@ -21,10 +21,11 @@
     <button id="btn_start">播放</button>
     <button id="btn_send">发送</button>
     <button id="btn_send_mut">批量发送</button>
-    <button id="btn_send_img">批量发送</button>
+    <button id="btn_send_img">发送图片消息</button>
+    <button id="btn_send_video">发送视频消息</button>
     <script src="/static/danmaku-plus.umd.js"></script>
     <script>
-      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage, ImgMessage } = danmakuPlus
+      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage, ImgMessage,VideoMessage } = danmakuPlus
       var canvas = document.getElementById('cav')
       var danmuku = new Danmaku(canvas, {
         width: 1280,
@@ -45,11 +46,14 @@
         height: 40
       })
       danmuku.addDanmuTrack(imgDanmuTrack)
-      danmuPool.addMessage(
-        new TextMessage({
-          mMsg: '12341234'
-        })
-      )
+
+      var videoDanmuPool = new DanmakuPool(10)
+      var videoDanmuTrack = new DanmaTrack(videoDanmuPool, {
+        top: 200,
+        height: 200
+      })
+      danmuku.addDanmuTrack(videoDanmuTrack)
+
       danmuku.start()
       function handlePause() {
         danmuku.pause()
@@ -82,11 +86,20 @@
         imgDanmuPool.addMessage(imgDanmu)
         imgDanmuPool.addMessage(imgDanmu2)
       }
+      function sendDanmuVideo() {
+        var videoDanmu = new VideoMessage({
+          url: 'https://vjs.zencdn.net/v/oceans.mp4',
+          width:300,
+          height:200
+        })
+        videoDanmuPool.addMessage(videoDanmu)
+      }
       document.getElementById('btn_send').addEventListener('click', sendDanmu)
       document.getElementById('btn_send_mut').addEventListener('click', sendDanmuMtu)
       document.getElementById('btn_pause').addEventListener('click', handlePause)
       document.getElementById('btn_start').addEventListener('click', handleStart)
       document.getElementById('btn_send_img').addEventListener('click', sendDanmuImg)
+      document.getElementById('btn_send_video').addEventListener('click', sendDanmuVideo)
     </script>
   </body>
 </html>
