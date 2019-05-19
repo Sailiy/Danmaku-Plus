@@ -20,6 +20,8 @@ export default class ImgMessage extends BaseMessage {
   }
   onCreate(callback: Function) {
     this.mImg.onload = () => {
+      this.ImgMessageConfig.width=this.ImgMessageConfig.width || this.mImg.width || 300
+      this.ImgMessageConfig.height = this.ImgMessageConfig.height || this.mImg.height || 200
       callback(true)
     }
     this.mImg.onerror = () => {
@@ -34,8 +36,8 @@ export default class ImgMessage extends BaseMessage {
   }
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
     return {
-      width: this.mImg.width,
-      height: this.mImg.height
+      width: this.ImgMessageConfig.width,
+      height: this.ImgMessageConfig.height
     }
   }
   onLayout(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Point {

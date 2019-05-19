@@ -9,8 +9,8 @@ interface VideoMessageConfig {
 export default class VideoMessage extends BaseMessage {
   private VideoMessageConfig: VideoMessageConfig = {
     url: '',
-    width: 0,
-    height: 0
+    width: 300,
+    height: 200
   }
   private mIsPlay:boolean=false
   private mVideo: HTMLVideoElement = document.createElement('video')
@@ -31,6 +31,7 @@ export default class VideoMessage extends BaseMessage {
     this.mVideo.style.top = '-4000px'
     this.mVideo.style.left = '-4000px'
     this.mVideo.preload ='auto'
+    this.mVideo.loop=true
     document.body.append(this.mVideo)
   }
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
