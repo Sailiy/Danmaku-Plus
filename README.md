@@ -4,7 +4,7 @@
 
 查看在线demo
 
-![](./screen/demo.png)
+![](https://github.com/Sailiy/Danmaku-Plus/blob/dev/screen/demo.png)
 
 ## install （安装）
 
