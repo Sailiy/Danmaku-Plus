@@ -4,7 +4,7 @@
 
 查看在线demo
 
-![](https://i.imgur.com/opUmHp0.png)
+![](./screen/demo.png)
 
 ## install （安装）
 
