@@ -65,8 +65,8 @@ export default class ImgMessage extends BaseMessage {
     }
 
     return {
-      width: frameInfo.width,
-      height: frameInfo.height
+      width: this.ImgMessageConfig.width,
+      height: this.ImgMessageConfig.height
     }
   }
   onLayout(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Point {

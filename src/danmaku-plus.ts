@@ -4,6 +4,7 @@ import { DanmaTrack } from './DanmaTrack'
 import TextMessage from './MessageImpl/TextMessage'
 import ImgMessage from './MessageImpl/ImgMessage'
 import GifMessage from './MessageImpl/GifMessage'
+import VideoMessage from './MessageImpl/VideoMessage'
 
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
 // import "core-js/fn/array.find"
@@ -14,5 +15,6 @@ export default {
   TextMessage,
   ImgMessage,
   GifMessage,
+  VideoMessage,
   DanmaTrack
 }
