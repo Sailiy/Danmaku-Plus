@@ -31,7 +31,7 @@ export default class ImgMessage extends BaseMessage {
     this.mImg.style.position = 'fixed'
     this.mImg.style.top = '-1000px'
     this.mImg.style.left = '-1000px'
-    document.body.append(this.mImg)
+    document.body.appendChild(this.mImg as HTMLElement)
   }
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
     return {

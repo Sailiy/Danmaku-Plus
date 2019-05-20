@@ -32,7 +32,7 @@ export default class VideoMessage extends BaseMessage {
     this.mVideo.style.left = '-4000px'
     this.mVideo.preload = 'auto'
     this.mVideo.loop = true
-    document.body.append(this.mVideo)
+    document.body.appendChild(this.mVideo as HTMLElement)
   }
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
     if (!this.mIsPlay) {
