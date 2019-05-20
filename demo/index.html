@@ -24,7 +24,8 @@
     <button id="btn_send_img">批量发送</button>
     <script src="/static/danmaku-plus.umd.js"></script>
     <script>
-      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage, ImgMessage } = danmakuPlus
+      const colorArr = ['red', 'blue', '#fff', '#000', 'pink', 'orange']
+      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage, ImgMessage, GifMessage } = danmakuPlus
       var canvas = document.getElementById('cav')
       var danmuku = new Danmaku(canvas, {
         width: 1280,
@@ -68,16 +69,22 @@
       function sendDanmuMtu() {
         var message = []
         for (var i = 0; i < 100; i++) {
-          message.push(new TextMessage({ mMsg: parseInt(Math.random() * 10000000) + '' }))
+          message.push(
+            new TextMessage({
+              mMsg: parseInt(Math.random() * 10000000) + '',
+              color: colorArr[Math.floor(Math.random() * colorArr.length)]
+            })
+          )
         }
         danmuPool.addMessages(message)
       }
+
       function sendDanmuImg() {
         var imgDanmu = new ImgMessage({
           url: 'http://img.gifhome.com/gif/s/20181004/081793df4f47143ff86d950bee221ac0.gif'
         })
-        var imgDanmu2 = new ImgMessage({
-          url: 'http://img.gifhome.com/gif/s/20181004/081793df4f47143ff86d950bee221ac0.gif'
+        var imgDanmu2 = new GifMessage({
+          url: '/test.gif'
         })
         imgDanmuPool.addMessage(imgDanmu)
         imgDanmuPool.addMessage(imgDanmu2)

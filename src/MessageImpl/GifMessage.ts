@@ -1,6 +1,7 @@
 import { IDanmaMessage, Point, Rect } from '../interface/IDanmaMessage'
 import { IDanmaTrackInfo } from '../interface/IDanmaTrack'
 import { BaseMessage } from './BaseMessage'
+import { ajax } from '../utils/xhr'
 import omggif from 'omggif'
 interface ImgMessageConfig {
   url: string
@@ -13,29 +14,59 @@ export default class ImgMessage extends BaseMessage {
     width: 0,
     height: 0
   }
-  private mImg: HTMLImageElement = new Image()
+  private mGifReader?: omggif.GifReader
+  private numFrames: number = 0
+  private currentFrameIndex: number = 0
+  private pixels: Uint8ClampedArray = new Uint8ClampedArray(0)
+
+  private lastFrameDate: number = new Date().getTime()
+
   constructor(msg: ImgMessageConfig) {
     super()
     this.ImgMessageConfig = Object.assign({}, this.ImgMessageConfig, msg)
   }
-  onCreate(callback: Function) {
-    this.mImg.onload = () => {
-      callback(true)
-    }
-    this.mImg.onerror = () => {
-      document.body.removeChild(this.mImg)
-      callback(false)
-    }
-    this.mImg.src = this.ImgMessageConfig.url
-    this.mImg.style.position = 'fixed'
-    this.mImg.style.top = '-1000px'
-    this.mImg.style.left = '-1000px'
-    document.body.append(this.mImg)
+  onCreate(cal: Function) {
+    let _this = this
+    ajax({
+      url: this.ImgMessageConfig.url,
+      callback(err, res: ArrayBuffer) {
+        if (err) {
+          console.log(err)
+          cal(false)
+        } else {
+          // tslint:disable-next-line: no-floating-promises
+          _this.newMethod(res)
+        }
+      }
+    })
   }
+  private newMethod(res: ArrayBuffer) {
+    // tslint:disable-next-line: no-floating-promises
+    this.mGifReader = new omggif.GifReader(res as any)
+    this.numFrames = this.mGifReader.numFrames()
+    let frame0Info = this.mGifReader.frameInfo(0)
+    let [width, height] = [frame0Info.width, frame0Info.height]
+    this.pixels = new Uint8ClampedArray(width * height * 4)
+  }
+
   onMeasure(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Rect {
+    let reader = this.mGifReader
+    if (this.currentFrameIndex >= this.numFrames) {
+      this.currentFrameIndex = 0
+    }
+    let frameInfo = {
+      width: this.ImgMessageConfig.width,
+      height: this.ImgMessageConfig.height
+    }
+    if (reader) {
+      frameInfo = reader.frameInfo(this.currentFrameIndex)
+      // this.lastFrameDate = new Date().getTime() + frameInfo.delay
+      reader.decodeAndBlitFrameRGBA(this.currentFrameIndex, this.pixels as any)
+    }
+
     return {
-      width: this.mImg.width,
-      height: this.mImg.height
+      width: frameInfo.width,
+      height: frameInfo.height
     }
   }
   onLayout(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): Point {
@@ -50,19 +81,11 @@ export default class ImgMessage extends BaseMessage {
     return this.position
   }
   onDraw(ctx: CanvasRenderingContext2D, trackInfo: IDanmaTrackInfo): void {
-    ctx.drawImage(
-      this.mImg,
-      this.position.left,
-      this.position.top,
-      this.size.width,
-      this.size.height
-    )
+    let imageData = new ImageData(this.pixels, this.size.width, this.size.height)
+    ctx.putImageData(imageData, this.position.left, this.position.top)
   }
   onDestroyed(): boolean {
     let result = this.position.left < -this.size.width
-    if (result) {
-      document.body.removeChild(this.mImg)
-    }
     return result
   }
 }
