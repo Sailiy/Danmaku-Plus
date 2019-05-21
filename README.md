@@ -9,7 +9,7 @@
 ## install （安装）
 
 ```
-npm install danmuku-plus --save
+npm i danmaku-plus --save
 ```
 
 ## Importing library （导入）
