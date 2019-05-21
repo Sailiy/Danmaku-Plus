@@ -1,6 +1,6 @@
 {
   "name": "danmaku-plus",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "keywords": [],
   "main": "dist/danmaku-plus.umd.js",
