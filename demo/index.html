@@ -26,7 +26,7 @@
     <script src="/static/danmaku-plus.umd.js"></script>
     <script>
       const colorArr = ['red', 'blue', '#fff', '#000', 'pink', 'orange']
-      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage, ImgMessage, GifMessage } = danmakuPlus
+      const { DanmakuPool, DanmaTrack, Danmaku, TextMessage, ImgMessage, GifMessage,VideoMessage } =danmakuPlus
       var canvas = document.getElementById('cav')
       var danmuku = new Danmaku(canvas, {
         width: 1280,
@@ -85,13 +85,14 @@
 
       function sendDanmuImg() {
         var imgDanmu = new ImgMessage({
-          url: 'http://img.gifhome.com/gif/s/20181004/081793df4f47143ff86d950bee221ac0.gif'
-        })
-        var imgDanmu2 = new GifMessage({
           url: '/test.gif'
         })
         imgDanmuPool.addMessage(imgDanmu)
-        imgDanmuPool.addMessage(imgDanmu2)
+        // gif目前有bug，暂不支持
+        // var imgDanmu2 = new GifMessage({
+        //   url: '/test.gif'
+        // })
+        // imgDanmuPool.addMessage(imgDanmu2)
       }
       function sendDanmuVideo() {
         var videoDanmu = new VideoMessage({
