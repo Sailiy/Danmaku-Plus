@@ -4,7 +4,7 @@
 
 如果你之前看过我的[80行代码实现高性能弹幕](http://www.rainx.org/2016/12/22/html5-canvas%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91%E8%A7%86%E9%A2%91%E5%BC%B9%E5%B9%95%E5%8A%9F%E8%83%BD/),你就会这个实现弹幕的思想还是很不错的，这个弹幕库使用TypeScript重构，不管是性能，还是易用性和扩展灵活性，都大大提高。
 
-查看在线demo
+查看[在线demo](https://sailiy.github.io/)
 
 ![](https://github.com/Sailiy/Danmaku-Plus/blob/dev/screen/demo.png)
 
